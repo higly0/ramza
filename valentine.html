@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Question</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffe6f2;
+            overflow: hidden;
+        }
+        h1 {
+            color: #ff1493;
+            font-size: 32px;
+        }
+        .button-container {
+            margin-top: 20px;
+            position: relative;
+            height: 50vh;
+        }
+        .btn {
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 10px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        .yes-btn {
+            background-color: #ff69b4;
+            color: white;
+            left: 45%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .no-btn {
+            background-color: #ffb6c1;
+            color: white;
+            left: 55%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hidden {
+            display: none;
+        }
+        #kitten-container img {
+            max-width: 300px;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Will you be my Valentine?</h1>
+    <div class="button-container">
+        <button class="btn yes-btn" onclick="showKitten()">Yes</button>
+        <button class="btn no-btn" onclick="makeYesBigger()">No</button>
+    </div>
+    <div id="kitten-container" class="hidden">
+        <img src="kitten.jpg" alt="Happy Kitten">
+        <h2>Yay! You made me so happy!</h2>
+    </div>
+
+    <script>
+        let yesButton = document.querySelector(".yes-btn");
+        let noButton = document.querySelector(".no-btn");
+
+        function showKitten() {
+            document.getElementById("kitten-container").classList.remove("hidden");
+            document.querySelector(".button-container").classList.add("hidden");
+        }
+
+        function makeYesBigger() {
+            let yesSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            let noSize = parseFloat(window.getComputedStyle(noButton).fontSize);
+
+            yesButton.style.fontSize = (yesSize * 1.2) + "px";
+            noButton.style.fontSize = (noSize * 0.8) + "px";
+
+            // Перемещение кнопки "No"
+            let maxX = window.innerWidth - noButton.offsetWidth;
+            let maxY = window.innerHeight - noButton.offsetHeight;
+            let randomX = Math.random() * maxX;
+            let randomY = Math.random() * maxY;
+
+            noButton.style.left = randomX + "px";
+            noButton.style.top = randomY + "px";
+
+            // Если "No" стало слишком маленьким, оно исчезает, а "Yes" занимает весь экран
+            if (noSize < 10) {
+                noButton.style.display = "none";
+                yesButton.style.fontSize = "50vw"; // кнопка "Yes" становится огромной
+                yesButton.style.width = "100vw";
+                yesButton.style.height = "100vh";
+                yesButton.style.left = "0";
+                yesButton.style.top = "0";
+            }
+        }
+    </script>
+
+</body>
+</html>
